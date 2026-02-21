@@ -12,7 +12,7 @@ class DestinationAdmin(admin.ModelAdmin):
 
 @admin.register(Booking)
 class BookingAdmin(admin.ModelAdmin):
-    list_display = ['customer_name', 'destination', 'booking_date', 'number_of_guests', 'status', 'total_price']
-    list_filter = ['status', 'booking_date', 'destination']
-    search_fields = ['customer_name', 'customer_email', 'destination__name']
+    list_display = ['customer_name', 'package', 'booking_date', 'number_of_guests', 'status', 'total_price']
+    list_filter = ['status', 'booking_date', 'package']
+    search_fields = ['customer_name', 'customer_email', 'package__name']
     list_editable = ['status']

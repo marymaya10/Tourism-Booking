@@ -30,8 +30,8 @@ class BookingViewSet(viewsets.ModelViewSet):
     queryset = Booking.objects.all()
     serializer_class = BookingSerializer
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
-    filterset_fields = ['status', 'booking_date', 'destination']
-    search_fields = ['customer_name', 'customer_email', 'destination__name']
+    filterset_fields = ['status', 'booking_date', 'package']
+    search_fields = ['customer_name', 'customer_email', 'package__name']
     ordering_fields = ['booking_date', 'created_at']
     ordering = ['-created_at']
 

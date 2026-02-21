@@ -30,6 +30,8 @@ INSTALLED_APPS = [
     
     # Local apps
     'destinations',
+    'tourpackages',
+    'bookings',
 ]
 
 MIDDLEWARE = [

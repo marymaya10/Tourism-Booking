@@ -44,10 +44,14 @@ class Booking(models.Model):
         ('cancelled', 'Cancelled'),
     ]
     
-    destination = models.ForeignKey(
-        Destination, 
+    # Link to TourPackage instead of directly to Destination
+    # (TourPackage already links to Destination)
+    package = models.ForeignKey(
+        'tourpackages.TourPackage', 
         on_delete=models.CASCADE,
-        related_name='bookings'
+        related_name='bookings',
+        null=True,
+        blank=True
     )
     customer_name = models.CharField(max_length=200)
     customer_email = models.EmailField()
@@ -68,4 +72,4 @@ class Booking(models.Model):
         ordering = ['-created_at']
 
     def __str__(self):
-        return f"{self.customer_name} - {self.destination.name}"
+        return f"{self.customer_name} - {self.package.name}"

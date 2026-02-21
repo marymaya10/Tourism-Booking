@@ -17,20 +17,21 @@ class DestinationSerializer(serializers.ModelSerializer):
 
 class BookingSerializer(serializers.ModelSerializer):
     """Serializer for Booking model"""
-    destination_name = serializers.CharField(source='destination.name', read_only=True)
+    package_name = serializers.CharField(source='package.name', read_only=True)
+    destination_name = serializers.CharField(source='package.destination.name', read_only=True)
     
     class Meta:
         model = Booking
         fields = [
-            'id', 'destination', 'destination_name', 'customer_name',
+            'id', 'package', 'package_name', 'destination_name', 'customer_name',
             'customer_email', 'number_of_guests', 'booking_date',
             'status', 'total_price', 'created_at', 'updated_at'
         ]
         read_only_fields = ['id', 'status', 'created_at', 'updated_at']
     
     def create(self, validated_data):
-        """Calculate total price based on destination price and number of guests"""
-        destination = validated_data['destination']
+        """Calculate total price based on package price and number of guests"""
+        package = validated_data['package']
         number_of_guests = validated_data['number_of_guests']
-        validated_data['total_price'] = destination.price_per_person * number_of_guests
+        validated_data['total_price'] = package.price * number_of_guests
         return super().create(validated_data)

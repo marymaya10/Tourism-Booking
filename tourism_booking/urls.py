@@ -25,6 +25,7 @@ def api_root(request):
         'message': 'Tourism Booking API',
         'endpoints': {
             'destinations': '/api/destinations/',
+            'tourpackages': '/api/tourpackages/',
             'bookings': '/api/bookings/',
             'admin': '/admin/'
         }
@@ -34,4 +35,5 @@ urlpatterns = [
     path('', api_root, name='api_root'),
     path('admin/', admin.site.urls),
     path('api/', include('destinations.urls')),
+    path('api/tourpackages/', include('tourpackages.urls')),
 ]
