@@ -27,6 +27,7 @@ def api_root(request):
             'destinations': '/api/destinations/',
             'tourpackages': '/api/tourpackages/',
             'bookings': '/api/bookings/',
+            'payments': '/api/payments/',
             'admin': '/admin/'
         }
     })
@@ -36,4 +37,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('destinations.urls')),
     path('api/tourpackages/', include('tourpackages.urls')),
+    path('api/payments/', include('payments.urls')),
 ]

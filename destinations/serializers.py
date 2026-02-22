@@ -33,5 +33,12 @@ class BookingSerializer(serializers.ModelSerializer):
         """Calculate total price based on package price and number of guests"""
         package = validated_data['package']
         number_of_guests = validated_data['number_of_guests']
+        
+        # Check available slots (overbooking prevention)
+        if package.available_slots is not None and number_of_guests > package.available_slots:
+            raise serializers.ValidationError(
+                f"Not enough available slots. Only {package.available_slots} slots available."
+            )
+        
         validated_data['total_price'] = package.price * number_of_guests
         return super().create(validated_data)
