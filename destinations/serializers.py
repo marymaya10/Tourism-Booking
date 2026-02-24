@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Destination, Booking
+from .models import Destination, Booking, Review
 
 
 class DestinationSerializer(serializers.ModelSerializer):
@@ -42,3 +42,17 @@ class BookingSerializer(serializers.ModelSerializer):
         
         validated_data['total_price'] = package.price * number_of_guests
         return super().create(validated_data)
+
+
+class ReviewSerializer(serializers.ModelSerializer):
+    """Serializer for Review model"""
+    user_username = serializers.CharField(source='user.username', read_only=True)
+    destination_name = serializers.CharField(source='destination.name', read_only=True)
+    
+    class Meta:
+        model = Review
+        fields = [
+            'id', 'user', 'user_username', 'destination', 'destination_name',
+            'rating', 'comment', 'created_at', 'updated_at'
+        ]
+        read_only_fields = ['id', 'user', 'created_at', 'updated_at']

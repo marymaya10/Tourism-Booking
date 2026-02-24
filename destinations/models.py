@@ -2,6 +2,7 @@ from decimal import Decimal
 
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
+from django.contrib.auth.models import User
 
 
 class Destination(models.Model):
@@ -73,3 +74,20 @@ class Booking(models.Model):
 
     def __str__(self):
         return f"{self.customer_name} - {self.package.name}"
+
+
+class Review(models.Model):
+    """Model representing a review for a destination"""
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='reviews')
+    destination = models.ForeignKey(Destination, on_delete=models.CASCADE, related_name='reviews')
+    rating = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)])
+    comment = models.TextField(blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ['-created_at']
+        unique_together = ('user', 'destination')
+
+    def __str__(self):
+        return f"{self.user.username} - {self.destination.name} - {self.rating}/5"

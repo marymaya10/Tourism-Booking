@@ -1,10 +1,10 @@
-from rest_framework import viewsets, filters, status
+from rest_framework import viewsets, filters, status, generics, permissions
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from django_filters.rest_framework import DjangoFilterBackend
 
-from .models import Destination, Booking
-from .serializers import DestinationSerializer, BookingSerializer
+from .models import Destination, Booking, Review
+from .serializers import DestinationSerializer, BookingSerializer, ReviewSerializer
 
 
 class DestinationViewSet(viewsets.ModelViewSet):
@@ -60,3 +60,26 @@ class BookingViewSet(viewsets.ModelViewSet):
         booking.status = 'cancelled'
         booking.save()
         return Response(BookingSerializer(booking).data)
+
+
+class ReviewListCreateView(generics.ListCreateAPIView):
+    """View for listing and creating reviews"""
+    queryset = Review.objects.all()
+    serializer_class = ReviewSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    filter_backends = [filters.SearchFilter, filters.OrderingFilter]
+    search_fields = ['user__username', 'destination__name', 'comment']
+    ordering_fields = ['rating', 'created_at']
+    ordering = ['-created_at']
+
+    def get_queryset(self):
+        """Filter reviews by destination if specified"""
+        queryset = super().get_queryset()
+        destination_id = self.request.query_params.get('destination')
+        if destination_id:
+            queryset = queryset.filter(destination_id=destination_id)
+        return queryset
+
+    def perform_create(self, serializer):
+        """Save the review with the current user"""
+        serializer.save(user=self.request.user)

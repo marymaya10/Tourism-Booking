@@ -28,6 +28,7 @@ def api_root(request):
             'tourpackages': '/api/tourpackages/',
             'bookings': '/api/bookings/',
             'payments': '/api/payments/',
+            'reviews': '/api/reviews/',
             'admin': '/admin/'
         }
     })
