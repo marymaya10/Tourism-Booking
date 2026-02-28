@@ -29,8 +29,6 @@ cd Tourism-Booking
 ```bash
 python -m venv venv
 venv\Scripts\activate  # On Windows
-# or
-source venv/bin/activate  # On Linux/Mac
 ```
 
 3. Install dependencies:
@@ -43,7 +41,7 @@ pip install django djangorestframework django-filter
 python manage.py migrate
 ```
 
-5. Create a superuser (optional):
+5. Create a superuser 
 ```bash
 python manage.py createsuperuser
 ```
