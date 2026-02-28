@@ -74,14 +74,6 @@ python manage.py runserver
 
 ## Testing with Postman
 
-### Fix Postman Localhost Issue
-If you get the error "You currently have a different Agent selected, which can't send requests to the Localhost":
-1. Click on the **Settings** icon (gear icon) in Postman
-2. Go to **General** tab
-3. Under "Request", find "Agent settings"
-4. Select **Desktop Agent (Native)** instead of Cloud Agent
-5. Restart Postman and try again
-
 ### Step 1: Login
 ```
 POST http://127.0.0.1:8000/api/auth/token/
