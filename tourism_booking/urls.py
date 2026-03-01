@@ -39,4 +39,6 @@ urlpatterns = [
     path('api/', include('destinations.urls')),
     path('api/tourpackages/', include('tourpackages.urls')),
     path('api/payments/', include('payments.urls')),
+    path('api/auth/', include('djoser.urls')),
+    path('api/auth/token/', include('djoser.urls.jwt')),
 ]
